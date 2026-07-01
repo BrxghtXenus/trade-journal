@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Trade Journal</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="logo">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#3B82F6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 20V10"/>
+          <path d="M18 20V4"/>
+          <path d="M6 20v-4"/>
+        </svg>
+        <div class="logo-text-group">
+          <span class="logo-text">Trade Journal</span>
+          <span class="logo-subtitle" id="rotating-text">Stay Disciplined</span>
+        </div>
+      </div>
+      <time id="today-date"></time>
+    </header>
+
+    <nav class="tabs">
+      <button class="tab active" data-view="journal">Journal</button>
+      <button class="tab" data-view="history">History</button>
+    </nav>
+
+    <main>
+      <div id="journal-section">
+        <section class="journal-section">
+        <div class="card">
+          <h2>Today's Journal</h2>
+          <form id="journal-form">
+            <div class="form-grid">
+              <div class="form-group">
+                <label for="pair">Pair</label>
+                <select id="pair" class="form-input" required>
+                  <option value="">Select pair</option>
+                  <option value="XAUUSD">XAUUSD</option>
+                  <option value="EURUSD">EURUSD</option>
+                  <option value="GBPUSD">GBPUSD</option>
+                  <option value="BTCUSD">BTCUSD</option>
+                  <option value="ETHUSD">ETHUSD</option>
+                  <option value="AUDUSD">AUDUSD</option>
+                  <option value="NZDUSD">NZDUSD</option>
+                  <option value="USDCAD">USDCAD</option>
+                  <option value="USDJPY">USDJPY</option>
+                  <option value="USDCHF">USDCHF</option>
+                  <option value="US30">US30</option>
+                  <option value="NASDAQ">NASDAQ</option>
+                  <option value="SP500">SP500</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Direction</label>
+                <div class="toggle-group">
+                  <button type="button" class="toggle-btn active" data-value="BUY">Buy</button>
+                  <button type="button" class="toggle-btn" data-value="SELL">Sell</button>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="entry">Entry</label>
+                <input type="number" id="entry" class="form-input" step="0.01" min="0" placeholder="1950.50">
+              </div>
+              <div class="form-group">
+                <label for="tp">TP</label>
+                <input type="number" id="tp" class="form-input" step="0.01" min="0" placeholder="1970.00">
+              </div>
+              <div class="form-group">
+                <label for="sl">SL</label>
+                <input type="number" id="sl" class="form-input" step="0.01" min="0" placeholder="1940.00">
+              </div>
+              <div class="form-group">
+                <label for="profit">Profit %</label>
+                <input type="number" id="profit" class="form-input" step="0.1" placeholder="+2.50">
+              </div>
+              <div class="form-group">
+                <label for="emotion">Emotion</label>
+                <select id="emotion" class="form-input">
+                  <option value="😀">😀 Happy</option>
+                  <option value="😎">😎 Confident</option>
+                  <option value="🤑">🤑 Profitable</option>
+                  <option value="🤔">🤔 Unsure</option>
+                  <option value="😐">😐 Neutral</option>
+                  <option value="😤">😤 Frustrated</option>
+                  <option value="😰">😰 Anxious</option>
+                  <option value="😭">😭 Devastated</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group full-width">
+              <label for="notes">Notes</label>
+              <textarea id="notes" class="form-input" rows="3" placeholder="Trade notes..."></textarea>
+            </div>
+            <button type="submit" id="save-btn">Save</button>
+          </form>
+        </div>
+      </section>
+
+      <section class="dashboard-grid">
+        <div class="card winrate-card">
+          <h2>Today's Winrate</h2>
+          <div class="donut-container">
+            <canvas id="winrate-canvas" width="200" height="200"></canvas>
+          </div>
+          <div class="winrate-stats">
+            <span>Win <strong id="win-count">0</strong></span>
+            <span class="dot-sep"></span>
+            <span>Loss <strong id="loss-count">0</strong></span>
+          </div>
+        </div>
+
+        <div class="card summary-card">
+          <h2>Today's Summary</h2>
+          <div class="summary-grid">
+            <div class="stat-item">
+              <span class="stat-label">Total Trades</span>
+              <span class="stat-value" id="total-trades">0</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-label">Wins</span>
+              <span class="stat-value green" id="wins">0</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-label">Losses</span>
+              <span class="stat-value red" id="losses">0</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-label">Winrate</span>
+              <span class="stat-value" id="winrate">0%</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-label">Avg RR</span>
+              <span class="stat-value" id="avg-rr">0</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-label">Net %</span>
+              <span class="stat-value" id="net">0%</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="monthly-section">
+        <div class="card">
+          <h2>Monthly Calendar <span id="month-label"></span></h2>
+          <div class="calendar-wrapper">
+            <div id="calendar-grid"></div>
+          </div>
+        </div>
+      </section>
+      </div>
+
+      <section id="history-section" class="hidden">
+        <div class="card">
+          <h2>Trade History</h2>
+          <div id="history-list"></div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
