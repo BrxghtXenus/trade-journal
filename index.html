@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>Trade Journal</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -13,7 +13,7 @@
   <div class="container">
     <header>
       <div class="logo">
-        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#3B82F6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <path d="M12 20V10"/>
           <path d="M18 20V4"/>
           <path d="M6 20v-4"/>
@@ -26,61 +26,136 @@
       <time id="today-date"></time>
     </header>
 
-    <nav class="tabs">
+    <nav class="tabs" id="top-tabs">
       <button class="tab active" data-view="journal">Journal</button>
       <button class="tab" data-view="history">History</button>
     </nav>
 
     <main>
       <div id="journal-section">
-        <section class="journal-section">
-        <div class="card">
-          <h2>Today's Journal</h2>
-          <form id="journal-form">
-            <div class="form-grid">
-              <div class="form-group">
-                <label for="pair">Pair</label>
-                <select id="pair" class="form-input" required>
-                  <option value="">Select pair</option>
-                  <option value="XAUUSD">XAUUSD</option>
-                  <option value="EURUSD">EURUSD</option>
-                  <option value="GBPUSD">GBPUSD</option>
-                  <option value="BTCUSD">BTCUSD</option>
-                  <option value="ETHUSD">ETHUSD</option>
-                  <option value="AUDUSD">AUDUSD</option>
-                  <option value="NZDUSD">NZDUSD</option>
-                  <option value="USDCAD">USDCAD</option>
-                  <option value="USDJPY">USDJPY</option>
-                  <option value="USDCHF">USDCHF</option>
-                  <option value="US30">US30</option>
-                  <option value="NASDAQ">NASDAQ</option>
-                  <option value="SP500">SP500</option>
-                </select>
+        <!-- Mini-KPI bar -->
+        <div class="mini-kpi" id="mini-kpi">
+          <span class="kpi-item">
+            <span class="kpi-label">Trades</span>
+            <span class="kpi-value" id="kpi-total">0</span>
+          </span>
+          <span class="kpi-gap"></span>
+          <span class="kpi-item">
+              <svg class="kpi-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#22C55E" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg>
+            <span class="kpi-value win" id="kpi-wins">0</span>
+          </span>
+          <span class="kpi-gap"></span>
+          <span class="kpi-item">
+              <svg class="kpi-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#EF4444" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+            <span class="kpi-value loss" id="kpi-losses">0</span>
+          </span>
+          <span class="kpi-gap"></span>
+          <span class="kpi-item kpi-net" id="kpi-net">
+            <span class="kpi-value">0%</span>
+          </span>
+          <span class="kpi-spacer"></span>
+          <button class="kpi-toggle" id="kpi-toggle" type="button" aria-label="Toggle stats">Details</button>
+        </div>
+
+        <!-- Collapsible stats -->
+        <div class="stats-collapse" id="stats-collapse">
+          <section class="dashboard-grid">
+            <div class="card winrate-card">
+              <h2>Winrate</h2>
+              <div class="donut-container">
+                <canvas id="winrate-canvas" width="140" height="140"></canvas>
               </div>
-              <div class="form-group">
-                <label>Direction</label>
-                <div class="toggle-group">
-                  <button type="button" class="toggle-btn active" data-value="BUY">Buy</button>
-                  <button type="button" class="toggle-btn" data-value="SELL">Sell</button>
+              <div class="winrate-stats">
+                <span>Win <strong id="win-count">0</strong></span>
+                <span class="dot-sep"></span>
+                <span>Loss <strong id="loss-count">0</strong></span>
+              </div>
+            </div>
+            <div class="card summary-card">
+              <h2>Summary</h2>
+              <div class="summary-grid">
+                <div class="stat-item">
+                  <span class="stat-label">Trades</span>
+                  <span class="stat-value" id="total-trades">0</span>
+                </div>
+                <div class="stat-item">
+                  <span class="stat-label">Wins</span>
+                  <span class="stat-value green" id="wins">0</span>
+                </div>
+                <div class="stat-item">
+                  <span class="stat-label">Losses</span>
+                  <span class="stat-value red" id="losses">0</span>
+                </div>
+                <div class="stat-item">
+                  <span class="stat-label">Winrate</span>
+                  <span class="stat-value" id="winrate">0%</span>
+                </div>
+                <div class="stat-item">
+                  <span class="stat-label">Avg RR</span>
+                  <span class="stat-value" id="avg-rr">0</span>
+                </div>
+                <div class="stat-item">
+                  <span class="stat-label">Net</span>
+                  <span class="stat-value" id="net">0%</span>
                 </div>
               </div>
-              <div class="form-group">
-                <label for="entry">Entry</label>
-                <input type="number" id="entry" class="form-input" step="0.01" min="0" placeholder="1950.50">
+            </div>
+          </section>
+        </div>
+
+        <!-- Form -->
+        <section class="journal-section">
+          <div class="card">
+            <div class="card-header">
+              <h2>New Trade</h2>
+            </div>
+            <form id="journal-form" autocomplete="off">
+              <div class="form-grid">
+                <div class="form-group">
+                  <label for="pair">Pair</label>
+                  <select id="pair" class="form-input" required>
+                    <option value="">Select pair</option>
+                    <option value="XAUUSD">XAUUSD</option>
+                    <option value="EURUSD">EURUSD</option>
+                    <option value="GBPUSD">GBPUSD</option>
+                    <option value="BTCUSD">BTCUSD</option>
+                    <option value="ETHUSD">ETHUSD</option>
+                    <option value="AUDUSD">AUDUSD</option>
+                    <option value="NZDUSD">NZDUSD</option>
+                    <option value="USDCAD">USDCAD</option>
+                    <option value="USDJPY">USDJPY</option>
+                    <option value="USDCHF">USDCHF</option>
+                    <option value="US30">US30</option>
+                    <option value="NASDAQ">NASDAQ</option>
+                    <option value="SP500">SP500</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label>Direction</label>
+                  <div class="toggle-group">
+                    <button type="button" class="toggle-btn active" data-value="BUY">Buy</button>
+                    <button type="button" class="toggle-btn" data-value="SELL">Sell</button>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="entry">Entry</label>
+                  <input type="number" id="entry" class="form-input" step="0.01" min="0" placeholder="0.00">
+                </div>
+                <div class="form-group">
+                  <label for="tp">TP <span class="field-badge" id="tp-badge"></span></label>
+                  <input type="number" id="tp" class="form-input" step="0.01" min="0" placeholder="0.00">
+                </div>
+                <div class="form-group">
+                  <label for="sl">SL <span class="field-badge" id="sl-badge"></span></label>
+                  <input type="number" id="sl" class="form-input" step="0.01" min="0" placeholder="0.00">
+                </div>
+                <div class="form-group">
+                  <label for="profit">Profit %</label>
+                  <input type="number" id="profit" class="form-input" step="0.1" placeholder="0.00">
+                  <span id="rr-hint" class="field-hint"></span>
+                </div>
               </div>
-              <div class="form-group">
-                <label for="tp">TP</label>
-                <input type="number" id="tp" class="form-input" step="0.01" min="0" placeholder="1970.00">
-              </div>
-              <div class="form-group">
-                <label for="sl">SL</label>
-                <input type="number" id="sl" class="form-input" step="0.01" min="0" placeholder="1940.00">
-              </div>
-              <div class="form-group">
-                <label for="profit">Profit %</label>
-                <input type="number" id="profit" class="form-input" step="0.1" placeholder="+2.50">
-              </div>
-              <div class="form-group">
+              <div class="form-group full-width">
                 <label for="emotion">Emotion</label>
                 <select id="emotion" class="form-input">
                   <option value="😀">😀 Happy</option>
@@ -93,78 +168,92 @@
                   <option value="😭">😭 Devastated</option>
                 </select>
               </div>
-            </div>
-            <div class="form-group full-width">
-              <label for="notes">Notes</label>
-              <textarea id="notes" class="form-input" rows="3" placeholder="Trade notes..."></textarea>
-            </div>
-            <button type="submit" id="save-btn">Save</button>
-          </form>
-        </div>
-      </section>
+              <div class="form-group full-width">
+                <label for="notes">Notes</label>
+                <textarea id="notes" class="form-input" rows="2" placeholder="Trade notes..."></textarea>
+              </div>
+              <button type="submit" id="save-btn">Save Trade</button>
+            </form>
+          </div>
+        </section>
 
-      <section class="dashboard-grid">
-        <div class="card winrate-card">
-          <h2>Today's Winrate</h2>
-          <div class="donut-container">
-            <canvas id="winrate-canvas" width="200" height="200"></canvas>
-          </div>
-          <div class="winrate-stats">
-            <span>Win <strong id="win-count">0</strong></span>
-            <span class="dot-sep"></span>
-            <span>Loss <strong id="loss-count">0</strong></span>
-          </div>
-        </div>
-
-        <div class="card summary-card">
-          <h2>Today's Summary</h2>
-          <div class="summary-grid">
-            <div class="stat-item">
-              <span class="stat-label">Total Trades</span>
-              <span class="stat-value" id="total-trades">0</span>
+        <!-- Calendar -->
+        <section class="monthly-section">
+          <div class="card">
+            <div class="cal-header-row">
+              <button class="cal-nav" id="cal-prev" type="button" aria-label="Previous month">‹</button>
+              <h2>Calendar <span id="month-label"></span></h2>
+              <button class="cal-nav" id="cal-next" type="button" aria-label="Next month">›</button>
             </div>
-            <div class="stat-item">
-              <span class="stat-label">Wins</span>
-              <span class="stat-value green" id="wins">0</span>
-            </div>
-            <div class="stat-item">
-              <span class="stat-label">Losses</span>
-              <span class="stat-value red" id="losses">0</span>
-            </div>
-            <div class="stat-item">
-              <span class="stat-label">Winrate</span>
-              <span class="stat-value" id="winrate">0%</span>
-            </div>
-            <div class="stat-item">
-              <span class="stat-label">Avg RR</span>
-              <span class="stat-value" id="avg-rr">0</span>
-            </div>
-            <div class="stat-item">
-              <span class="stat-label">Net %</span>
-              <span class="stat-value" id="net">0%</span>
+            <div class="calendar-wrapper">
+              <div id="calendar-grid"></div>
             </div>
           </div>
-        </div>
-      </section>
-
-      <section class="monthly-section">
-        <div class="card">
-          <h2>Monthly Calendar <span id="month-label"></span></h2>
-          <div class="calendar-wrapper">
-            <div id="calendar-grid"></div>
-          </div>
-        </div>
-      </section>
+        </section>
       </div>
 
       <section id="history-section" class="hidden">
         <div class="card">
-          <h2>Trade History</h2>
+          <div class="card-header">
+            <h2>Trade History</h2>
+          </div>
+          <div class="history-controls">
+            <div class="history-search-wrap">
+              <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#94A3B8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+              <input type="text" id="history-search" class="form-input" placeholder="Search pair..." aria-label="Search trades">
+            </div>
+            <select id="filter-direction" class="form-input filter-select" aria-label="Filter by direction">
+              <option value="all">All</option>
+              <option value="BUY">Buy</option>
+              <option value="SELL">Sell</option>
+            </select>
+            <select id="filter-result" class="form-input filter-select" aria-label="Filter by result">
+              <option value="all">All</option>
+              <option value="win">Win</option>
+              <option value="loss">Loss</option>
+              <option value="breakeven">BE</option>
+            </select>
+          </div>
           <div id="history-list"></div>
         </div>
       </section>
     </main>
+
+    <div id="toast-container" class="toast-container"></div>
+
+    <div id="modal-overlay" class="modal-overlay hidden">
+      <div class="modal" id="trade-modal" role="dialog" aria-modal="true">
+        <div class="modal-header">
+          <span class="modal-title" id="modal-title">Trade Details</span>
+          <button class="modal-close" id="modal-close" aria-label="Close">&times;</button>
+        </div>
+        <div class="modal-body" id="modal-body"></div>
+      </div>
+      <div class="modal confirm-modal" id="confirm-modal" role="dialog" aria-modal="true">
+        <div class="modal-header">
+          <span class="modal-title">Confirm</span>
+        </div>
+        <div class="modal-body">
+          <p id="confirm-message" class="confirm-message">Are you sure?</p>
+          <div class="confirm-actions">
+            <button class="confirm-btn cancel-btn" id="confirm-cancel">Cancel</button>
+            <button class="confirm-btn danger-btn" id="confirm-ok">Delete</button>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
+
+  <nav class="mobile-tabs" id="mobile-tabs" aria-label="Navigation">
+    <button class="mobile-tab active" data-view="journal" aria-label="Journal">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20V10"/><path d="M18 20V4"/><path d="M6 20v-4"/></svg>
+      <span>Journal</span>
+    </button>
+    <button class="mobile-tab" data-view="history" aria-label="History">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+      <span>History</span>
+    </button>
+  </nav>
 
   <script src="script.js"></script>
 </body>
