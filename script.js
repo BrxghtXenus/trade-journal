@@ -644,8 +644,11 @@
             '<span class="trade-card-emotion">' + (e.emotion || '') + '</span>' +
           '</div>' +
           (e.image ? '<div class="trade-img-thumb"><img src="' + e.image + '" alt="screenshot"></div>' : '') +
+          '<button class="entry-delete trade-card-delete">Delete</button>' +
         '</div>';
       list.appendChild(card);
+      var tradeDel = card.querySelector('.trade-card-delete');
+      tradeDel.addEventListener('click', function () { deleteHistoryEntry(item.date, e.timestamp, card); });
     });
   }
 
@@ -891,12 +894,6 @@
       div.className = 'history-entry';
       div.style.animationDelay = (index * 0.04) + 's';
 
-      // Swipe delete button
-      var swipeBtn = document.createElement('button');
-      swipeBtn.className = 'history-entry-swipe';
-      swipeBtn.textContent = 'Delete';
-      swipeBtn.addEventListener('click', function () { deleteHistoryEntry(item.date, e.timestamp, div); });
-
       var mainDiv = document.createElement('div');
       mainDiv.className = 'history-entry-main';
 
@@ -904,7 +901,7 @@
       header.className = 'history-header';
       header.innerHTML = '<span class="history-date">' + displayDate + '</span>';
       var delBtn = document.createElement('button');
-      delBtn.className = 'history-delete';
+      delBtn.className = 'entry-delete';
       delBtn.textContent = 'Delete';
       delBtn.addEventListener('click', function () { deleteHistoryEntry(item.date, e.timestamp, div); });
       header.appendChild(delBtn);
@@ -955,11 +952,8 @@
         imgDiv.innerHTML = '<img src="' + e.image + '" alt="screenshot">';
         mainDiv.appendChild(imgDiv);
       }
-      div.appendChild(swipeBtn);
       div.appendChild(mainDiv);
       list.appendChild(div);
-
-      setupSwipe(div, mainDiv);
     });
   }
 
@@ -979,56 +973,6 @@
         showToast('Trade deleted', 'error');
       }
     });
-  }
-
-  /* ─── SWIPE GESTURE ─── */
-
-  function setupSwipe(container, mainEl) {
-    var startX = 0, currentX = 0;
-    var isDragging = false;
-    var isRevealed = false;
-
-    function onStart(e) {
-      var touch = e.touches ? e.touches[0] : e;
-      startX = touch.clientX;
-      currentX = startX;
-      isDragging = true;
-    }
-
-    function onMove(e) {
-      if (!isDragging) return;
-      var touch = e.touches ? e.touches[0] : e;
-      currentX = touch.clientX;
-      var delta = currentX - startX;
-      if (delta < 0) {
-        var translate = Math.max(delta, -80);
-        mainEl.style.transform = 'translateX(' + translate + 'px)';
-        mainEl.style.transition = 'none';
-      }
-    }
-
-    function onEnd() {
-      if (!isDragging) return;
-      isDragging = false;
-      var delta = currentX - startX;
-      mainEl.style.transition = 'transform 0.25s cubic-bezier(0.16, 1, 0.3, 1)';
-      if (delta < -50) {
-        mainEl.style.transform = 'translateX(-80px)';
-        isRevealed = true;
-      } else {
-        mainEl.style.transform = 'translateX(0)';
-        isRevealed = false;
-      }
-    }
-
-    container.addEventListener('touchstart', onStart, { passive: true });
-    container.addEventListener('touchmove', onMove, { passive: true });
-    container.addEventListener('touchend', onEnd);
-    // Mouse fallback
-    container.addEventListener('mousedown', onStart);
-    container.addEventListener('mousemove', onMove);
-    container.addEventListener('mouseup', onEnd);
-    container.addEventListener('mouseleave', onEnd);
   }
 
   function setupHistoryFilters() {

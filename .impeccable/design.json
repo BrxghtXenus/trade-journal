@@ -1,0 +1,135 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-07-12T20:32:00.000Z",
+  "title": "Design System: Trade Journal",
+  "extensions": {
+    "colorMeta": {
+      "primary": { "role": "primary", "displayName": "Emerald", "canonical": "oklch(54% 0.17 160)", "tonalRamp": ["oklch(20% 0.12 160)", "oklch(30% 0.15 160)", "oklch(40% 0.17 160)", "oklch(54% 0.17 160)", "oklch(65% 0.12 160)", "oklch(75% 0.08 160)", "oklch(88% 0.04 160)", "oklch(96% 0.02 160)"] },
+      "profit": { "role": "profit", "displayName": "Leaf Green", "canonical": "oklch(66% 0.18 145)", "tonalRamp": ["oklch(20% 0.12 145)", "oklch(35% 0.15 145)", "oklch(50% 0.18 145)", "oklch(66% 0.18 145)", "oklch(75% 0.12 145)", "oklch(85% 0.08 145)", "oklch(92% 0.04 145)", "oklch(97% 0.02 145)"] },
+      "danger": { "role": "danger", "displayName": "Signal Red", "canonical": "oklch(55% 0.22 30)", "tonalRamp": ["oklch(20% 0.15 30)", "oklch(32% 0.18 30)", "oklch(42% 0.22 30)", "oklch(55% 0.22 30)", "oklch(65% 0.15 30)", "oklch(78% 0.10 30)", "oklch(88% 0.06 30)", "oklch(96% 0.03 30)"] },
+      "bg": { "role": "neutral", "displayName": "Ink Well", "canonical": "oklch(12% 0.02 250)", "tonalRamp": ["oklch(5% 0.01 250)", "oklch(8% 0.015 250)", "oklch(12% 0.02 250)", "oklch(18% 0.02 250)", "oklch(25% 0.015 250)", "oklch(35% 0.01 250)", "oklch(50% 0.005 250)", "oklch(70% 0.002 250)"] },
+      "card-bg": { "role": "neutral", "displayName": "Deep Navy", "canonical": "oklch(16% 0.015 250)", "tonalRamp": ["oklch(8% 0.01 250)", "oklch(12% 0.015 250)", "oklch(16% 0.015 250)", "oklch(22% 0.01 250)", "oklch(30% 0.008 250)", "oklch(40% 0.005 250)", "oklch(55% 0.003 250)", "oklch(72% 0.001 250)"] },
+      "border": { "role": "neutral", "displayName": "Slate Border", "canonical": "oklch(24% 0.03 260)", "tonalRamp": ["oklch(12% 0.02 260)", "oklch(18% 0.025 260)", "oklch(24% 0.03 260)", "oklch(32% 0.025 260)", "oklch(42% 0.02 260)", "oklch(55% 0.015 260)", "oklch(70% 0.01 260)", "oklch(85% 0.005 260)"] },
+      "text": { "role": "neutral", "displayName": "Frost White", "canonical": "oklch(96% 0.01 260)", "tonalRamp": ["oklch(40% 0.005 260)", "oklch(55% 0.008 260)", "oklch(70% 0.01 260)", "oklch(80% 0.01 260)", "oklch(88% 0.01 260)", "oklch(92% 0.01 260)", "oklch(96% 0.01 260)", "oklch(99% 0.005 260)"] },
+      "text-secondary": { "role": "neutral", "displayName": "Silver Mist", "canonical": "oklch(70% 0.02 260)", "tonalRamp": ["oklch(30% 0.01 260)", "oklch(45% 0.015 260)", "oklch(58% 0.02 260)", "oklch(70% 0.02 260)", "oklch(78% 0.015 260)", "oklch(85% 0.01 260)", "oklch(92% 0.005 260)", "oklch(97% 0.002 260)"] }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "Display", "purpose": "Logo text only. Never used for body content." },
+      "body": { "displayName": "Body", "purpose": "Form inputs, entry values, general reading." },
+      "label": { "displayName": "Label", "purpose": "Form labels, stat labels, field headers." },
+      "mono": { "displayName": "Mono-adjacent Numbers", "purpose": "KPI values, profit/loss, calendar results — numbers that need alignment." }
+    },
+    "shadows": [
+      { "name": "card-hover", "value": "0 8px 40px rgba(0, 0, 0, 0.5)", "purpose": "Card hover state lift." },
+      { "name": "modal", "value": "0 16px 64px rgba(0, 0, 0, 0.6)", "purpose": "Modal dialog backdrop." },
+      { "name": "toast", "value": "0 8px 32px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.04)", "purpose": "Toast notification elevation." }
+    ],
+    "motion": [
+      { "name": "ease-standard", "value": "0.2s ease", "purpose": "Default transition for state changes." },
+      { "name": "ease-enter", "value": "cubic-bezier(0.16, 1, 0.3, 1)", "purpose": "Ease-out-expo for section and toast entrances." },
+      { "name": "duration-short", "value": "200ms", "purpose": "Hover, focus, active transitions." },
+      { "name": "duration-medium", "value": "350ms", "purpose": "Toast enter, collapse expand, modal enter." }
+    ],
+    "breakpoints": [
+      { "name": "tablet", "value": "768px" },
+      { "name": "mobile", "value": "480px" },
+      { "name": "small-mobile", "value": "600px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Primary call-to-action — save a trade journal entry.",
+      "html": "<button class=\"ds-btn-primary\">Save Trade</button>",
+      "css": ".ds-btn-primary { display: block; width: auto; min-width: 200px; margin: 12px auto 0; padding: 12px 32px; background: #10B981; color: #fff; border: none; border-radius: 100px; font-family: 'Inter', sans-serif; font-size: 14px; font-weight: 600; cursor: pointer; letter-spacing: 0.2px; transition: background 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease; } .ds-btn-primary:hover { background: #059669; box-shadow: 0 0 20px rgba(16, 185, 129, 0.25); transform: translateY(-1px); } .ds-btn-primary:active { transform: translateY(0) scale(0.98); } .ds-btn-primary:focus-visible { outline: 2px solid #10B981; outline-offset: 2px; }"
+    },
+    {
+      "name": "Form Input",
+      "kind": "input",
+      "refersTo": "input-text",
+      "description": "Default text and number input field.",
+      "html": "<input class=\"ds-input\" type=\"text\" placeholder=\"Enter value\" />",
+      "css": ".ds-input { width: 100%; padding: 10px 14px; background: rgba(0, 0, 0, 0.3); border: 1px solid #1E293B; border-radius: 8px; color: #F8FAFC; font-family: 'Inter', sans-serif; font-size: 14px; outline: none; transition: border-color 0.2s ease, box-shadow 0.2s ease; min-width: 0; box-sizing: border-box; } .ds-input:hover { border-color: rgba(255, 255, 255, 0.10); } .ds-input:focus { border-color: #10B981; box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.15), 0 0 20px rgba(16, 185, 129, 0.08); } .ds-input::placeholder { color: #94A3B8; } .ds-input.error { border-color: #EF4444 !important; box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.12), 0 0 12px rgba(239, 68, 68, 0.08); } .ds-input:focus-visible { outline: 2px solid #10B981; outline-offset: 2px; }"
+    },
+    {
+      "name": "Card",
+      "kind": "card",
+      "refersTo": "card-default",
+      "description": "Default glassmorphism container card.",
+      "html": "<div class=\"ds-card\"><h2 style=\"font-size:14px; font-weight:600; text-transform:uppercase; letter-spacing:0.5px; color:#94A3B8; margin-bottom:20px;\">Section Title</h2><p style=\"color:#F8FAFC; font-size:14px;\">Card content goes here.</p></div>",
+      "css": ".ds-card { position: relative; overflow: hidden; padding: 28px; background: linear-gradient(135deg, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0.015) 40%, rgba(16,185,129,0.03) 65%, rgba(255,255,255,0.03) 100%); backdrop-filter: blur(26px) saturate(1.3); -webkit-backdrop-filter: blur(26px) saturate(1.3); border: 1px solid rgba(255,255,255,0.06); border-radius: 16px; box-shadow: none; transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease, background 0.2s ease; } .ds-card::before { content: ''; position: absolute; top: 0; left: 12px; right: 12px; height: 1px; background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.12) 20%, rgba(255,255,255,0.18) 50%, rgba(255,255,255,0.12) 80%, transparent 100%); pointer-events: none; } .ds-card:hover { border-color: rgba(255,255,255,0.12); transform: translateY(-2px) scale(1.005); box-shadow: 0 8px 40px rgba(0,0,0,0.5); }"
+    },
+    {
+      "name": "Tab",
+      "kind": "nav",
+      "refersTo": "tab-default",
+      "description": "Segmented tab control for Journal / History view switching.",
+      "html": "<div class=\"ds-tabs\"><button class=\"ds-tab active\">Journal</button><button class=\"ds-tab\">History</button></div>",
+      "css": ".ds-tabs { display: flex; gap: 0; margin-bottom: 28px; border: 1px solid #1E293B; border-radius: 8px; overflow: hidden; width: fit-content; background: rgba(0,0,0,0.2); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); } .ds-tab { padding: 10px 28px; background: transparent; border: none; color: #94A3B8; font-family: 'Inter', sans-serif; font-size: 14px; font-weight: 500; cursor: pointer; transition: all 0.2s ease; letter-spacing: 0.2px; } .ds-tab:hover { color: #F8FAFC; background: rgba(255,255,255,0.03); } .ds-tab.active { color: #fff; background: #10B981; font-weight: 600; } .ds-tab:focus-visible { outline: 2px solid #10B981; outline-offset: 2px; }"
+    },
+    {
+      "name": "Stat Item",
+      "kind": "card",
+      "refersTo": "stat-item",
+      "description": "Dashboard statistic tile — label + large value.",
+      "html": "<div class=\"ds-stat\"><span class=\"ds-stat-label\">Trades</span><span class=\"ds-stat-value\">24</span></div>",
+      "css": ".ds-stat { padding: 16px; background: rgba(0,0,0,0.2); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); border: 1px solid #1E293B; border-radius: 8px; display: flex; flex-direction: column; gap: 8px; transition: border-color 0.2s ease; } .ds-stat:hover { border-color: rgba(255,255,255,0.10); background: rgba(0,0,0,0.3); } .ds-stat-label { font-size: 11px; font-weight: 500; color: #94A3B8; text-transform: uppercase; letter-spacing: 0.3px; } .ds-stat-value { font-size: 24px; font-weight: 700; letter-spacing: -0.5px; line-height: 1; color: #F8FAFC; } .ds-stat-value.profit { color: #22C55E; } .ds-stat-value.loss { color: #EF4444; }"
+    },
+    {
+      "name": "Toggle (Buy/Sell)",
+      "kind": "button",
+      "refersTo": "toggle-group",
+      "description": "Direction toggle for trade entry form — Buy (green) / Sell (red).",
+      "html": "<div class=\"ds-toggle\"><button class=\"ds-toggle-btn active\" data-value=\"BUY\">Buy</button><button class=\"ds-toggle-btn\" data-value=\"SELL\">Sell</button></div>",
+      "css": ".ds-toggle { display: flex; background: rgba(0,0,0,0.25); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); border: 1px solid #1E293B; border-radius: 8px; overflow: hidden; height: 40px; } .ds-toggle-btn { flex: 1; padding: 0 16px; background: transparent; border: none; color: #94A3B8; font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 500; cursor: pointer; transition: all 0.2s ease; letter-spacing: 0.2px; } .ds-toggle-btn:hover { color: #F8FAFC; } .ds-toggle-btn.active { color: #fff; font-weight: 600; } .ds-toggle-btn[data-value=\"BUY\"].active { background: #10B981; box-shadow: 0 0 12px rgba(16,185,129,0.3); } .ds-toggle-btn[data-value=\"SELL\"].active { background: #EF4444; box-shadow: 0 0 12px rgba(239,68,68,0.3); } .ds-toggle-btn:focus-visible { outline: 2px solid #10B981; outline-offset: 2px; }"
+    },
+    {
+      "name": "Chip/Badge",
+      "kind": "chip",
+      "refersTo": "chip-direction",
+      "description": "Direction or result badge — Buy (emerald) / Sell (red).",
+      "html": "<span class=\"ds-chip buy\">BUY</span>",
+      "css": ".ds-chip { display: inline-flex; align-items: center; padding: 2px 10px; border-radius: 4px; font-size: 12px; font-weight: 600; letter-spacing: 0.3px; } .ds-chip.buy { background: rgba(16,185,129,0.15); color: #10B981; } .ds-chip.sell { background: rgba(239,68,68,0.15); color: #EF4444; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Lab Notebook",
+    "overview": "A calm, precise space for recording and reviewing trades — like a scientist's lab notebook where every entry is deliberate and nothing is decorative. The interface recedes so the data leads. The system uses a deep dark background with subtle green radial glows that suggest the brand without announcing it. Cards use soft glassmorphism — transparent enough to see the background glow through, solid enough to read comfortably. Motion is restrained: only state changes and section entrances, no choreography.",
+    "keyCharacteristics": [
+      "Deep, quiet dark background with ambient green undertones",
+      "Glassmorphism used with restraint — functional depth, not decoration",
+      "Green accent is purposeful and sparing (\u226410% of any screen)",
+      "Calm, unhurried motion — ease-out-expo curves, no bounce or elastic",
+      "Information density that rewards attention without overwhelming",
+      "Soft, approachable corners (16px cards, 8px inputs)"
+    ],
+    "rules": [
+      { "name": "The Signal Rule", "body": "Emerald is the only accent. It appears on \u226410% of any screen. When everything is highlighted, nothing is.", "section": "colors" },
+      { "name": "The One Family Rule", "body": "No font pairings. Inter at every weight is the entire system.", "section": "typography" },
+      { "name": "The Flat-By-Default Rule", "body": "No surface casts a shadow at rest. Shadows communicate interactivity; a static card has nothing to say.", "section": "elevation" }
+    ],
+    "dos": [
+      "Do use emerald sparingly — as a signal, not a theme.",
+      "Do let the dark background breathe. Cards are transparent; the glow should show through.",
+      "Do use Inter at every weight. No second font family.",
+      "Do use ease-out-expo curves for motion (cubic-bezier(0.16, 1, 0.3, 1)).",
+      "Do use tabular-nums (font-variant-numeric: tabular-nums) for all numerical data.",
+      "Do respect prefers-reduced-motion: replace enter animations with instant appearance.",
+      "Do use the tonal layering (bg \u2192 card-bg) for depth at rest; shadows only for interaction."
+    ],
+    "donts": [
+      "Don't use gradient text or any background-clip: text effect.",
+      "Don't add glassmorphism decoratively — every frosted surface has a functional reason.",
+      "Don't use a second accent color. Emerald is the single signal.",
+      "Don't add side-stripe borders (left/right colored bars on cards or alerts).",
+      "Don't use bounce or elastic easing. Never.",
+      "Don't use numbered section markers (01 / 02 / 03) as decorative scaffolding.",
+      "Don't animate layout properties (width, height, top, left) if transform/opacity can do the job.",
+      "Don't use the hero-metric template (big number + small label + gradient accent).",
+      "Don't make the UI feel childish or gamified — no badges, rewards, bright neons, or playful illustrations.",
+      "Don't sacrifice contrast for elegance — body text must hit 4.5:1 against its background."
+    ]
+  }
+}

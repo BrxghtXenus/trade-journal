@@ -518,7 +518,6 @@ body::before {
   border-radius: var(--radius-sm);
   overflow: hidden;
   position: relative;
-  touch-action: pan-x;
   animation: fadeIn 0.3s ease backwards;
   transition: transform var(--transition), box-shadow var(--transition);
 }
@@ -534,25 +533,6 @@ body::before {
   transition: background var(--transition);
   position: relative;
   z-index: 1;
-}
-
-.trade-card-swipe {
-  position: absolute;
-  right: 0;
-  top: 0;
-  bottom: 0;
-  width: 80px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: var(--red);
-  color: #fff;
-  font-size: 13px;
-  font-weight: 600;
-  font-family: 'Inter', sans-serif;
-  border: none;
-  cursor: pointer;
-  z-index: 0;
 }
 
 .trade-card-top {
@@ -685,10 +665,8 @@ body::before {
   -webkit-backdrop-filter: blur(var(--glass-blur));
   border: 1px solid var(--glass-border);
   border-radius: var(--radius-sm);
-  padding: 14px;
   position: relative;
   overflow: hidden;
-  touch-action: pan-x;
   animation: fadeIn 0.3s ease backwards;
   transition: transform var(--transition), box-shadow var(--transition);
 }
@@ -703,31 +681,42 @@ body::before {
   z-index: 1;
   background: transparent;
   transition: background var(--transition);
+  box-shadow: none !important;
+  padding: 14px;
 }
 
-.history-entry-swipe {
-  position: absolute;
-  right: 0;
-  top: 0;
-  bottom: 0;
-  width: 80px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: var(--red);
-  color: #fff;
-  font-size: 13px;
-  font-weight: 600;
-  font-family: 'Inter', sans-serif;
+/* ─── ENTRY DELETE BUTTON ─── */
+
+.entry-delete {
+  padding: 4px 10px;
+  background: transparent;
   border: none;
+  border-radius: 6px;
+  color: var(--text-muted);
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  font-weight: 500;
   cursor: pointer;
-  z-index: 0;
+  flex-shrink: 0;
+  transition: background var(--transition), color var(--transition);
+}
+
+.entry-delete:hover {
+  background: rgba(239, 68, 68, 0.1);
+  color: var(--red);
+}
+
+.trade-card-delete {
+  margin-top: 10px;
+  width: 100%;
+  text-align: center;
 }
 
 .history-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 8px;
   margin-bottom: 10px;
   padding-bottom: 10px;
   border-bottom: 1px solid var(--glass-border);
@@ -737,31 +726,20 @@ body::before {
   font-size: 13px;
   font-weight: 600;
   color: var(--text);
-}
-
-.history-delete {
-  padding: 5px 14px;
-  background: transparent;
-  border: 1px solid var(--border);
-  border-radius: 6px;
-  color: var(--text-secondary);
-  font-family: 'Inter', sans-serif;
-  font-size: 12px;
-  font-weight: 500;
-  cursor: pointer;
-  transition: background var(--transition), color var(--transition), border-color var(--transition);
-}
-
-.history-delete:hover {
-  background: var(--red-dim);
-  border-color: var(--red);
-  color: var(--red);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-width: 0;
 }
 
 .history-body {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr;
   gap: 8px;
+}
+
+@media (min-width: 480px) {
+  .history-body { grid-template-columns: 1fr 1fr 1fr 1fr; }
 }
 
 .history-field {
@@ -1858,21 +1836,22 @@ input[type="number"].form-input::-webkit-inner-spin-button {
 
 .modal-trade-delete {
   margin-top: 8px;
-  padding: 5px 14px;
-  background: transparent;
-  border: 1px solid var(--border);
-  border-radius: 6px;
-  color: var(--text-secondary);
+  padding: 5px 12px;
+  background: var(--glass-bg);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  border: 1px solid var(--glass-border);
+  border-radius: 8px;
+  color: var(--text-muted);
   font-family: 'Inter', sans-serif;
   font-size: 12px;
   font-weight: 500;
   cursor: pointer;
-  transition: background var(--transition), color var(--transition), border-color var(--transition);
+  transition: background var(--transition), color var(--transition);
 }
 
 .modal-trade-delete:hover {
   background: var(--red-dim);
-  border-color: var(--red);
   color: var(--red);
 }
 
@@ -1965,7 +1944,6 @@ input[type="number"].form-input::-webkit-inner-spin-button {
 .form-input:focus-visible,
 .btn-submit:focus-visible,
 .cal-arrow:focus-visible,
-.history-delete:focus-visible,
 .modal-close:focus-visible,
 .confirm-btn:focus-visible,
 .btn-secondary:focus-visible,
