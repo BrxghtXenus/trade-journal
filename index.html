@@ -2,225 +2,296 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=1.0, user-scalable=no">
   <title>Trade Journal</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@flaticon/flaticon-uicons@3.3.1/css/bold/rounded.css">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <div class="container">
-    <header>
-      <div class="logo">
-        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M12 20V10"/>
-          <path d="M18 20V4"/>
-          <path d="M6 20v-4"/>
+  <div class="app">
+    <!-- ═══ HEADER ═══ -->
+    <header class="app-header">
+      <button class="hamburger" id="btn-hamburger" aria-label="Open menu">
+        <span></span><span></span><span></span>
+      </button>
+      <div class="header-brand">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#3B82F6" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 20V10"/><path d="M18 20V4"/><path d="M6 20v-4"/>
         </svg>
-        <div class="logo-text-group">
-          <span class="logo-text">Trade Journal</span>
-          <span class="logo-subtitle" id="rotating-text">Stay Disciplined</span>
-        </div>
+        <span>Trade Journal</span>
       </div>
-      <time id="today-date"></time>
+      <div class="user-avatar" id="user-avatar">
+        <i class="fi fi-br-user"></i>
+      </div>
     </header>
 
-    <nav class="tabs" id="top-tabs">
-      <button class="tab active" data-view="journal">Journal</button>
-      <button class="tab" data-view="history">History</button>
-    </nav>
-
-    <main>
-      <div id="journal-section">
-        <!-- Mini-KPI bar -->
-        <div class="mini-kpi" id="mini-kpi">
-          <span class="kpi-item">
-            <span class="kpi-label">Trades</span>
-            <span class="kpi-value" id="kpi-total">0</span>
-          </span>
-          <span class="kpi-gap"></span>
-          <span class="kpi-item">
-              <svg class="kpi-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#22C55E" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg>
-            <span class="kpi-value win" id="kpi-wins">0</span>
-          </span>
-          <span class="kpi-gap"></span>
-          <span class="kpi-item">
-              <svg class="kpi-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#EF4444" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
-            <span class="kpi-value loss" id="kpi-losses">0</span>
-          </span>
-          <span class="kpi-gap"></span>
-          <span class="kpi-item kpi-net" id="kpi-net">
-            <span class="kpi-value">0%</span>
-          </span>
-          <span class="kpi-spacer"></span>
-          <button class="kpi-toggle" id="kpi-toggle" type="button" aria-label="Toggle stats">Details</button>
+    <!-- ═══ DRAWER ═══ -->
+    <div class="drawer-overlay hidden" id="drawer-overlay">
+      <div class="drawer-backdrop" id="drawer-backdrop"></div>
+      <aside class="drawer" id="drawer">
+        <div class="drawer-header">
+          <span class="drawer-brand">TradeJournal</span>
         </div>
-
-        <!-- Collapsible stats -->
-        <div class="stats-collapse" id="stats-collapse">
-          <section class="dashboard-grid">
-            <div class="card winrate-card">
-              <h2>Winrate</h2>
-              <div class="donut-container">
-                <canvas id="winrate-canvas" width="140" height="140"></canvas>
-              </div>
-              <div class="winrate-stats">
-                <span>Win <strong id="win-count">0</strong></span>
-                <span class="dot-sep"></span>
-                <span>Loss <strong id="loss-count">0</strong></span>
-              </div>
-            </div>
-            <div class="card summary-card">
-              <h2>Summary</h2>
-              <div class="summary-grid">
-                <div class="stat-item">
-                  <span class="stat-label">Trades</span>
-                  <span class="stat-value" id="total-trades">0</span>
-                </div>
-                <div class="stat-item">
-                  <span class="stat-label">Wins</span>
-                  <span class="stat-value green" id="wins">0</span>
-                </div>
-                <div class="stat-item">
-                  <span class="stat-label">Losses</span>
-                  <span class="stat-value red" id="losses">0</span>
-                </div>
-                <div class="stat-item">
-                  <span class="stat-label">Winrate</span>
-                  <span class="stat-value" id="winrate">0%</span>
-                </div>
-                <div class="stat-item">
-                  <span class="stat-label">Avg RR</span>
-                  <span class="stat-value" id="avg-rr">0</span>
-                </div>
-                <div class="stat-item">
-                  <span class="stat-label">Net</span>
-                  <span class="stat-value" id="net">0%</span>
-                </div>
-              </div>
-            </div>
-          </section>
+        <nav class="drawer-nav">
+          <button class="drawer-item" data-view="dashboard">
+            <i class="fi fi-br-dashboard"></i>
+            <span>Dashboard</span>
+          </button>
+          <button class="drawer-item" data-view="calendar-view">
+            <i class="fi fi-br-calendar"></i>
+            <span>Calendar</span>
+          </button>
+        </nav>
+        <div class="drawer-footer">
+          <span class="drawer-version">v1.0</span>
         </div>
+      </aside>
+    </div>
 
-        <!-- Form -->
-        <section class="journal-section">
-          <div class="card">
-            <div class="card-header">
-              <h2>New Trade</h2>
-            </div>
-            <form id="journal-form" autocomplete="off">
-              <div class="form-grid">
-                <div class="form-group">
-                  <label for="pair">Pair</label>
-                  <select id="pair" class="form-input" required>
-                    <option value="">Select pair</option>
-                    <option value="XAUUSD">XAUUSD</option>
-                    <option value="EURUSD">EURUSD</option>
-                    <option value="GBPUSD">GBPUSD</option>
-                    <option value="BTCUSD">BTCUSD</option>
-                    <option value="ETHUSD">ETHUSD</option>
-                    <option value="AUDUSD">AUDUSD</option>
-                    <option value="NZDUSD">NZDUSD</option>
-                    <option value="USDCAD">USDCAD</option>
-                    <option value="USDJPY">USDJPY</option>
-                    <option value="USDCHF">USDCHF</option>
-                    <option value="US30">US30</option>
-                    <option value="NASDAQ">NASDAQ</option>
-                    <option value="SP500">SP500</option>
-                  </select>
-                </div>
-                <div class="form-group">
-                  <label>Direction</label>
-                  <div class="toggle-group">
-                    <button type="button" class="toggle-btn active" data-value="BUY">Buy</button>
-                    <button type="button" class="toggle-btn" data-value="SELL">Sell</button>
-                  </div>
-                </div>
-                <div class="form-group">
-                  <label for="entry">Entry</label>
-                  <input type="number" id="entry" class="form-input" step="0.01" min="0" placeholder="0.00">
-                </div>
-                <div class="form-group">
-                  <label for="tp">TP <span class="field-badge" id="tp-badge"></span></label>
-                  <input type="number" id="tp" class="form-input" step="0.01" min="0" placeholder="0.00">
-                </div>
-                <div class="form-group">
-                  <label for="sl">SL <span class="field-badge" id="sl-badge"></span></label>
-                  <input type="number" id="sl" class="form-input" step="0.01" min="0" placeholder="0.00">
-                </div>
-                <div class="form-group">
-                  <label for="profit">Profit %</label>
-                  <input type="number" id="profit" class="form-input" step="0.1" placeholder="0.00">
-                  <span id="rr-hint" class="field-hint"></span>
-                </div>
-              </div>
-              <div class="form-group full-width">
-                <label for="emotion">Emotion</label>
-                <select id="emotion" class="form-input">
-                  <option value="😀">😀 Happy</option>
-                  <option value="😎">😎 Confident</option>
-                  <option value="🤑">🤑 Profitable</option>
-                  <option value="🤔">🤔 Unsure</option>
-                  <option value="😐">😐 Neutral</option>
-                  <option value="😤">😤 Frustrated</option>
-                  <option value="😰">😰 Anxious</option>
-                  <option value="😭">😭 Devastated</option>
-                </select>
-              </div>
-              <div class="form-group full-width">
-                <label for="notes">Notes</label>
-                <textarea id="notes" class="form-input" rows="2" placeholder="Trade notes..."></textarea>
-              </div>
-              <button type="submit" id="save-btn">Save Trade</button>
-            </form>
+    <!-- ═══ MAIN CONTENT ═══ -->
+    <main class="main-content" id="main-content">
+
+      <!-- ─── DASHBOARD / HOME ─── -->
+      <div class="view active" id="view-dashboard">
+        <section class="summary-cards" id="summary-cards">
+          <div class="summary-card" data-delay="0">
+            <span class="summary-label">Win Rate</span>
+            <span class="summary-value blue" id="s-winrate">0%</span>
+            <span class="summary-sub" id="s-winrate-sub">—</span>
+          </div>
+          <div class="summary-card" data-delay="100">
+            <span class="summary-label">Net Profit</span>
+            <span class="summary-value green" id="s-netprofit">$0</span>
+            <span class="summary-sub" id="s-netprofit-sub">—</span>
+          </div>
+          <div class="summary-card" data-delay="200">
+            <span class="summary-label">Profit Factor</span>
+            <span class="summary-value" id="s-profitfactor">0.00</span>
+            <span class="summary-sub" id="s-profitfactor-sub">—</span>
           </div>
         </section>
 
-        <!-- Calendar -->
-        <section class="monthly-section">
-          <div class="card">
-            <div class="cal-header-row">
-              <button class="cal-nav" id="cal-prev" type="button" aria-label="Previous month">‹</button>
-              <h2>Calendar <span id="month-label"></span></h2>
-              <button class="cal-nav" id="cal-next" type="button" aria-label="Next month">›</button>
+        <section class="main-card">
+          <div class="card-header">
+            <div class="card-tabs">
+              <button class="card-tab active" data-chart="equity">Equity Curve</button>
+              <button class="card-tab" data-chart="winrate">Win Rate</button>
             </div>
-            <div class="calendar-wrapper">
-              <div id="calendar-grid"></div>
+            <span class="card-period">Last 30 Days</span>
+          </div>
+          <div class="chart-container">
+            <canvas id="equity-canvas"></canvas>
+          </div>
+          <div class="recent-section">
+            <div class="recent-header">
+              <span class="recent-title">Recent Trades</span>
+              <button class="recent-view-all" id="btn-view-all">View All</button>
             </div>
+            <div class="recent-list" id="recent-trades"></div>
           </div>
         </section>
       </div>
 
-      <section id="history-section" class="hidden">
-        <div class="card">
-          <div class="card-header">
-            <h2>Trade History</h2>
+      <!-- ─── JOURNAL / HISTORY ─── -->
+      <div class="view" id="view-history">
+        <div class="history-controls">
+          <div class="history-search-wrap">
+            <i class="fi fi-br-search search-icon"></i>
+            <input type="text" id="history-search" class="form-input" placeholder="Search pair..." aria-label="Search">
           </div>
-          <div class="history-controls">
-            <div class="history-search-wrap">
-              <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#94A3B8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-              <input type="text" id="history-search" class="form-input" placeholder="Search pair..." aria-label="Search trades">
-            </div>
-            <select id="filter-direction" class="form-input filter-select" aria-label="Filter by direction">
-              <option value="all">All</option>
-              <option value="BUY">Buy</option>
-              <option value="SELL">Sell</option>
-            </select>
-            <select id="filter-result" class="form-input filter-select" aria-label="Filter by result">
-              <option value="all">All</option>
-              <option value="win">Win</option>
-              <option value="loss">Loss</option>
-              <option value="breakeven">BE</option>
-            </select>
-          </div>
-          <div id="history-list"></div>
+          <select id="filter-direction" class="form-input filter-select" aria-label="Direction">
+            <option value="all">All</option>
+            <option value="BUY">Long</option>
+            <option value="SELL">Short</option>
+          </select>
+          <select id="filter-result" class="form-input filter-select" aria-label="Result">
+            <option value="all">All</option>
+            <option value="win">Win</option>
+            <option value="loss">Loss</option>
+            <option value="breakeven">BE</option>
+          </select>
         </div>
-      </section>
+        <div class="history-list-wrap" id="history-list"></div>
+      </div>
+
+      <!-- ─── ANALYTICS ─── -->
+      <div class="view" id="view-analytics">
+        <div class="analytics-content">
+          <div class="analytics-card">
+            <h3>Win Rate</h3>
+            <span class="analytics-big" id="a-winrate">0%</span>
+            <canvas id="donut-canvas" width="160" height="160"></canvas>
+            <div class="analytics-stats">
+              <span>Wins <strong id="a-wins">0</strong></span>
+              <span class="a-dot"></span>
+              <span>Losses <strong id="a-losses">0</strong></span>
+            </div>
+          </div>
+          <div class="analytics-card">
+            <h3>Summary</h3>
+            <div class="a-stat-grid">
+              <div class="a-stat"><span class="a-label">Trades</span><span class="a-value" id="a-trades">0</span></div>
+              <div class="a-stat"><span class="a-label">Wins</span><span class="a-value green" id="a-wins-count">0</span></div>
+              <div class="a-stat"><span class="a-label">Losses</span><span class="a-value red" id="a-losses-count">0</span></div>
+              <div class="a-stat"><span class="a-label">Winrate</span><span class="a-value" id="a-wr">0%</span></div>
+              <div class="a-stat"><span class="a-label">Avg RR</span><span class="a-value" id="a-avg-rr">0</span></div>
+              <div class="a-stat"><span class="a-label">Net</span><span class="a-value" id="a-net">0%</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ─── SETTINGS ─── -->
+      <div class="view" id="view-settings">
+        <div class="settings-card">
+          <h3>Data Management</h3>
+          <p>Export or reset your trading data.</p>
+          <div class="settings-actions">
+            <button class="btn-secondary" id="btn-export">Export CSV</button>
+            <button class="btn-danger" id="btn-reset">Reset All Data</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ─── CALENDAR ─── -->
+      <div class="view" id="calendar-panel">
+        <div class="cal-nav-row">
+          <button class="cal-arrow" id="cal-prev" aria-label="Previous"><i class="fi fi-br-angle-left"></i></button>
+          <span class="cal-month-label" id="cal-label">January 2026</span>
+          <button class="cal-arrow" id="cal-next" aria-label="Next"><i class="fi fi-br-angle-right"></i></button>
+        </div>
+        <div class="cal-grid-wrap">
+          <div id="cal-grid"></div>
+        </div>
+      </div>
+
     </main>
 
+    <!-- ═══ BOTTOM NAVIGATION ═══ -->
+    <nav class="bottom-nav" id="bottom-nav">
+      <button class="nav-item active" data-view="dashboard" aria-label="Home">
+        <i class="fi fi-br-home"></i>
+        <span class="nav-label">Home</span>
+      </button>
+      <button class="nav-item" data-view="history" aria-label="Journal">
+        <i class="fi fi-br-notebook"></i>
+        <span class="nav-label">Journal</span>
+      </button>
+      <button class="nav-fab" id="btn-add-trade" aria-label="Add Trade">
+        <i class="fi fi-br-plus"></i>
+      </button>
+      <button class="nav-item" data-view="analytics" aria-label="Analytics">
+        <i class="fi fi-br-chart-mixed"></i>
+        <span class="nav-label">Analytics</span>
+      </button>
+      <button class="nav-item" data-view="settings" aria-label="Settings">
+        <i class="fi fi-br-settings"></i>
+        <span class="nav-label">Settings</span>
+      </button>
+    </nav>
+
+    <!-- ═══ BOTTOM SHEET (TRADE FORM) ═══ -->
+    <div class="sheet-overlay hidden" id="sheet-overlay">
+      <div class="bottom-sheet" id="journal-panel">
+        <div class="sheet-handle"></div>
+        <div class="sheet-header">
+          <h2>New Trade</h2>
+          <button class="sheet-close" id="journal-close" aria-label="Close">&times;</button>
+        </div>
+        <form id="journal-form" autocomplete="off">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="pair">Pair</label>
+              <select id="pair" class="form-input" required>
+                <option value="">Select pair</option>
+                <option value="XAUUSD">XAUUSD</option>
+                <option value="EURUSD">EURUSD</option>
+                <option value="GBPUSD">GBPUSD</option>
+                <option value="BTCUSD">BTCUSD</option>
+                <option value="ETHUSD">ETHUSD</option>
+                <option value="AUDUSD">AUDUSD</option>
+                <option value="NZDUSD">NZDUSD</option>
+                <option value="USDCAD">USDCAD</option>
+                <option value="USDJPY">USDJPY</option>
+                <option value="USDCHF">USDCHF</option>
+                <option value="US30">US30</option>
+                <option value="NASDAQ">NASDAQ</option>
+                <option value="SP500">SP500</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Direction</label>
+              <div class="toggle-group">
+                <button type="button" class="toggle-btn" data-value="BUY">Long</button>
+                <button type="button" class="toggle-btn active" data-value="SELL">Short</button>
+              </div>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="entry">Entry</label>
+              <input type="number" id="entry" class="form-input" step="0.01" min="0" placeholder="0.00">
+            </div>
+            <div class="form-group">
+              <label for="tp">TP <span class="field-badge" id="tp-badge"></span></label>
+              <input type="number" id="tp" class="form-input" step="0.01" min="0" placeholder="0.00">
+            </div>
+            <div class="form-group">
+              <label for="sl">SL <span class="field-badge" id="sl-badge"></span></label>
+              <input type="number" id="sl" class="form-input" step="0.01" min="0" placeholder="0.00">
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="profit">Profit %</label>
+              <input type="number" id="profit" class="form-input" step="0.1" placeholder="0.00">
+              <span id="rr-hint" class="field-hint"></span>
+            </div>
+            <div class="form-group">
+              <label for="emotion">Emotion</label>
+              <select id="emotion" class="form-input">
+                <option value="😀">😀 Happy</option>
+                <option value="😎">😎 Confident</option>
+                <option value="🤑">🤑 Profitable</option>
+                <option value="🤔">🤔 Unsure</option>
+                <option value="😐">😐 Neutral</option>
+                <option value="😤">😤 Frustrated</option>
+                <option value="😰">😰 Anxious</option>
+                <option value="😭">😭 Devastated</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group" style="flex:2">
+              <label for="notes">Notes</label>
+              <textarea id="notes" class="form-input" rows="2" placeholder="Trade notes..."></textarea>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Image</label>
+              <div class="upload-wrap">
+                <input type="file" id="trade-image" accept="image/*" class="upload-input">
+                <label for="trade-image" class="upload-label"><span class="fi fi-br-picture"></span> Add Image</label>
+                <div class="upload-preview hidden" id="upload-preview">
+                  <img id="upload-img" alt="Screenshot">
+                  <button type="button" class="upload-remove" id="upload-remove" aria-label="Remove image">&times;</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <button type="submit" class="btn-submit">Save Trade</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- ═══ TOAST ═══ -->
     <div id="toast-container" class="toast-container"></div>
 
+    <!-- ═══ MODAL ═══ -->
     <div id="modal-overlay" class="modal-overlay hidden">
       <div class="modal" id="trade-modal" role="dialog" aria-modal="true">
         <div class="modal-header">
@@ -242,19 +313,8 @@
         </div>
       </div>
     </div>
+
   </div>
-
-  <nav class="mobile-tabs" id="mobile-tabs" aria-label="Navigation">
-    <button class="mobile-tab active" data-view="journal" aria-label="Journal">
-      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20V10"/><path d="M18 20V4"/><path d="M6 20v-4"/></svg>
-      <span>Journal</span>
-    </button>
-    <button class="mobile-tab" data-view="history" aria-label="History">
-      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-      <span>History</span>
-    </button>
-  </nav>
-
   <script src="script.js"></script>
 </body>
 </html>
